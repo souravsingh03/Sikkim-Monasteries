@@ -12,3 +12,11 @@ desktop.ini
 ../Java & Dsa notes/
 ../medilink/
 ../my-app/
+
+# Ignore personal Desktop files
+*.pdf
+*.docx
+*.mp4
+*.zip
+*.lnk
+desktop.ini
