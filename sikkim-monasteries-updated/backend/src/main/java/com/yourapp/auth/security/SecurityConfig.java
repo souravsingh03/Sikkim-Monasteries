@@ -30,17 +30,17 @@ public class SecurityConfig {
 
     private static final String[] PUBLIC_URLS = {
             "/",
+            "/error",
             "/api/auth/**",
             "/api/newsletter/**",
             "/api/monasteries",
-            "/api/monasteries/{slug}",
+            "/api/monasteries/**",
             "/api/sessions",
-            "/api/sessions/upcoming",
-            "/api/sessions/live",
-            "/api/sessions/{id}",
+            "/api/sessions/**",
             "/api/handicrafts",
             "/api/handicrafts/**",
-            "/actuator/health"
+            "/actuator",
+            "/actuator/**"
     };
 
     @Bean
