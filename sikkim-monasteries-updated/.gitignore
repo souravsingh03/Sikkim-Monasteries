@@ -1,0 +1,14 @@
+# Ignore personal Desktop files
+*.pdf
+*.docx
+*.mp4
+*.zip
+*.lnk
+desktop.ini
+../Aktu syllabus/
+../Coding/
+../Fog of War/
+../GreenNest/
+../Java & Dsa notes/
+../medilink/
+../my-app/
