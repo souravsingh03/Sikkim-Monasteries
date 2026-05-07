@@ -19,7 +19,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/sessions")
-@CrossOrigin(origins = "http://localhost:5173")
 public class MonkSessionController {
 
     @Autowired private MonkSessionRepository sessionRepository;

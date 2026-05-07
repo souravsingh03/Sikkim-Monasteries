@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/handicrafts")
-@CrossOrigin(origins = "http://localhost:5173")
 public class HandicraftController {
 
     @Autowired

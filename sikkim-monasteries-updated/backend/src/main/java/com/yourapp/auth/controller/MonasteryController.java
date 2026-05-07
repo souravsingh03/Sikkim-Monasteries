@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/monasteries")
-@CrossOrigin(origins = "http://localhost:5173")
 public class MonasteryController {
 
     @Autowired

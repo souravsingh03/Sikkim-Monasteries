@@ -19,7 +19,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/stamps")
-@CrossOrigin(origins = "http://localhost:5173")
 public class QrStampController {
 
     @Autowired private QrStampRepository stampRepository;
