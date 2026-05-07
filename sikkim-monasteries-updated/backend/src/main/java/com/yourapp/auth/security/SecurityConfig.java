@@ -28,19 +28,19 @@ public class SecurityConfig {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
-    // ── Whitelist public endpoints ────────────────────────────────
     private static final String[] PUBLIC_URLS = {
-        "/api/auth/**",
-        "/api/newsletter/**",       // subscribe is public
-        "/api/monasteries",         // list monasteries
-        "/api/monasteries/{slug}",  // single monastery detail
-        "/api/sessions",            // list sessions
-        "/api/sessions/upcoming",
-        "/api/sessions/live",
-        "/api/sessions/{id}",
-        "/api/handicrafts",         // list handicrafts
-        "/api/handicrafts/**",
-        "/actuator/health"
+            "/",
+            "/api/auth/**",
+            "/api/newsletter/**",
+            "/api/monasteries",
+            "/api/monasteries/{slug}",
+            "/api/sessions",
+            "/api/sessions/upcoming",
+            "/api/sessions/live",
+            "/api/sessions/{id}",
+            "/api/handicrafts",
+            "/api/handicrafts/**",
+            "/actuator/health"
     };
 
     @Bean
@@ -70,26 +70,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            // Disable CSRF (stateless JWT-based auth)
-            .csrf(csrf -> csrf.disable())
-
-            // CORS config
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-
-            // Session: STATELESS — no server-side sessions
-            .sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-
-            // Authorize requests
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(PUBLIC_URLS).permitAll()
-                .anyRequest().authenticated()
-            )
-
-            // Wire in our custom provider and JWT filter
-            .authenticationProvider(authenticationProvider())
-            .addFilterBefore(jwtAuthFilter(),
-                UsernamePasswordAuthenticationFilter.class);
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(PUBLIC_URLS).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthFilter(),
+                        UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -97,7 +88,14 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:5173")); // Vite dev server
+
+        // ✅ Add ALL allowed origins here
+        config.setAllowedOrigins(List.of(
+                "http://localhost:5173",                          // local dev
+                "https://sikkim-monasteries-olive.vercel.app",   // your Vercel frontend
+                "https://sikkim-monasteries.onrender.com"        // Render itself
+        ));
+
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
